@@ -1,0 +1,29 @@
+version: '3.3'
+services:
+  nginx:
+    build: ./nginx
+    ports:
+    - '80:80'
+    depends_on:
+      - web
+      - server1
+      - server2
+  server1:
+    restart: on-failure
+    build: ./server
+    environment:
+      - PORT=5000
+    ports:
+      - '5000:5000'
+  server2:
+    restart: on-failure
+    build: ./server
+    environment:
+      - PORT=5000
+    ports:
+      - '5001:5000'
+  web:
+    restart: on-failure
+    build: ./web
+    ports:
+      - '3000:3000'
